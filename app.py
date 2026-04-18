@@ -6,7 +6,13 @@ import plotly.express as px
 st.set_page_config(page_title="Nexign: Матрица позиционирования", layout="wide")
 
 st.title("Стратегический анализ B2B-вендоров (AHP)")
-st.markdown("Изменяйте веса критериев в боковой панели, чтобы увидеть, как меняется лидер рынка в зависимости от приоритетов заказчика.")
+
+# ДОБАВЛЕН НОВЫЙ ТЕКСТ ПО ТВОЕМУ ЗАПРОСУ
+st.markdown("""
+Изменяйте веса критериев в боковой панели, чтобы увидеть, как меняется лидер рынка в зависимости от приоритетов заказчика. 
+
+*Данная интерактивная визуализация представляет собой средневзвешенную стратегическую модель (фреймворк McKinsey), рассчитанную с помощью математического метода AHP (Метод анализа иерархий Томаса Саати).*
+""")
 
 # Сырые данные
 data = {
@@ -21,23 +27,23 @@ df = pd.DataFrame(data)
 st.sidebar.header("Веса критериев")
 st.sidebar.markdown("Настройте важность каждого параметра для клиента:")
 
-# 1. ИНИЦИАЛИЗАЦИЯ ПАМЯТИ ДЛЯ КНОПКИ СБРОСА
+# Инициализация памяти для кнопки сброса
 if 'w1' not in st.session_state: st.session_state.w1 = 35
 if 'w2' not in st.session_state: st.session_state.w2 = 30
 if 'w3' not in st.session_state: st.session_state.w3 = 20
 if 'w4' not in st.session_state: st.session_state.w4 = 15
 
-# Функция, которая возвращает ползунки в исходное положение
+# Функция сброса
 def reset_sliders():
     st.session_state.w1 = 35
     st.session_state.w2 = 30
     st.session_state.w3 = 20
     st.session_state.w4 = 15
 
-# Сама кнопка
+# Кнопка сброса
 st.sidebar.button("🔄 Сбросить по умолчанию", on_click=reset_sliders)
 
-# Ползунки теперь привязаны к памяти (key=...)
+# Ползунки
 w1 = st.sidebar.slider('Суверенитет (On-premise)', 0, 100, key='w1')
 w2 = st.sidebar.slider('Highload-масштаб', 0, 100, key='w2')
 w3 = st.sidebar.slider('Agility (Time-to-Market)', 0, 100, key='w3')
@@ -90,7 +96,7 @@ fig = px.bar(
     text='Итоговый балл'
 )
 
-# 2. ДОБАВЛЕНА ПЛАВНАЯ АНИМАЦИЯ (transition_duration)
+# Настройка графика
 fig.update_layout(
     showlegend=False, 
     yaxis={'categoryorder':'total ascending'},
@@ -98,7 +104,7 @@ fig.update_layout(
     yaxis_title="",
     plot_bgcolor='rgba(0,0,0,0)',
     font=dict(size=14),
-    transition_duration=500  # Полсекунды плавной перерисовки
+    transition_duration=500 
 )
 
 fig.update_traces(textposition='outside')
